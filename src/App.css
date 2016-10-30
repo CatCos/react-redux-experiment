@@ -1,3 +1,11 @@
 .list-item {
   margin-top: 10px;
 }
+
+.even-item {
+  color: blue;
+}
+
+.odd-item {
+  color: green;
+}

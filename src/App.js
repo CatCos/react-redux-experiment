@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import classnames from 'classnames';
 import './App.css';
 
 const personsList = [
@@ -103,8 +103,16 @@ class App extends Component {
   }
 
   renderPerson(person, id) {
+    const isEven = id => id % 2 === 0;
+    const isOdd = id => Math.abs(id % 2) === 1;
+
+    const styles = classnames('list-item', {
+      'even-item': isEven(id),
+      'odd-item': isOdd(id)
+    });
+
     return (
-      <li key={id} className="list-item">
+      <li key={id} className={styles}>
         <div>{`Name: ${person.name}`}</div>
         <div>{`Age: ${person.age}`}</div>
       </li>
