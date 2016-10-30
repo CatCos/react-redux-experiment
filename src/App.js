@@ -27,6 +27,10 @@ class App extends Component {
     newPerson: {
       name: '',
       age: ''
+    },
+    errors: {
+      name: '',
+      age: ''
     }
   }
 
@@ -69,6 +73,7 @@ class App extends Component {
             value={this.state.newPerson.name}
             onChange={this.handleNameChange}
           />
+         <span className="help-block">{this.state.errors.name}</span>
         </div>
         <div className="form-group">
           <label>Age</label>
@@ -78,6 +83,7 @@ class App extends Component {
             value={this.state.newPerson.age}
             onChange={this.handleAgeChange}
           />
+         <span className="help-block">{this.state.errors.age}</span>
         </div>
         <button className="btn btn-default" onClick={this.handleFormSubmition}>Add person</button>
       </form>
@@ -90,16 +96,42 @@ class App extends Component {
 
   resetNewPersonForm() {
     this.setState({ newPerson: { name: '', age: '' } });
+
+  }
+
+  resetErrors() {
+    this.setState({errors : {name: '', age: ''}})
+  }
+
+  isValid() {
+    if (this.state.newPerson.name === '' && this.state.newPerson.age === '') {
+      this.setState({errors : {name: 'Name required.', age: 'Age required.'}})
+      return false;
+
+    } else if (this.state.newPerson.name === '') {
+      this.setState({errors : {name: 'Name required.'}})
+      return false;
+
+    } else if (this.state.newPerson.age === '') {
+      this.setState({errors : {age: 'Age required.'}})
+      return false;
+
+    }
+    this.resetErrors();
+    this.resetNewPersonForm();
+
+    return true;
   }
 
   addPerson() {
-    this.setState({ persons: this.state.persons.concat(this.state.newPerson) });
+    if (this.isValid()) {
+      this.setState({ persons: this.state.persons.concat(this.state.newPerson) });
+    }
   }
 
   handleFormSubmition = (e) => {
     e.preventDefault();
     this.addPerson();
-    this.resetNewPersonForm();
   }
 
   renderPerson(person, id) {
