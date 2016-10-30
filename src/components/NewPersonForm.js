@@ -95,30 +95,28 @@ class NewPersonForm extends Component {
 
   resetNewPersonForm() {
     this.setState({ newPerson: { name: '', age: '' } });
-
   }
 
   resetErrors() {
-    this.setState({errors : {name: '', age: ''}})
+    this.setState({ errors : { name: '', age: '' } });
   }
 
   isValid() {
     if (this.state.newPerson.name === '' && this.state.newPerson.age === '') {
-      this.setState({errors : {name: 'Name required.', age: 'Age required.'}})
+      this.setState({ errors: { name: 'Name required.', age: 'Age required.' } });
       return false;
-
-    } else if (this.state.newPerson.name === '') {
-      this.setState({errors : {name: 'Name required.'}})
-      return false;
-
-    } else if (this.state.newPerson.age === '') {
-      this.setState({errors : {age: 'Age required.'}})
-      return false;
-
     }
+    else if (this.state.newPerson.name === '') {
+      this.setState({ errors: { name: 'Name required.' } });
+      return false;
+    }
+    else if (this.state.newPerson.age === '') {
+      this.setState({errors: { age: 'Age required.' } });
+      return false;
+    }
+
     this.resetErrors();
     this.resetNewPersonForm();
-
     return true;
   }
 
