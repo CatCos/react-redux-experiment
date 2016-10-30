@@ -61,6 +61,11 @@ class NewPersonForm extends Component {
     this.setState({ newPerson });
   }
 
+  handleFormSubmition = (e) => {
+    e.preventDefault();
+    this.addPerson();
+  }
+
   renderNewPersonForm() {
     return (
       <form>
@@ -89,10 +94,6 @@ class NewPersonForm extends Component {
     );
   }
 
-  generateRandId() {
-    return Math.floor((Math.random() * 100000) + 1);
-  }
-
   resetNewPersonForm() {
     this.setState({ newPerson: { name: '', age: '' } });
   }
@@ -102,16 +103,18 @@ class NewPersonForm extends Component {
   }
 
   isValid() {
-    if (this.state.newPerson.name === '' && this.state.newPerson.age === '') {
+    const { name, age } = this.state.newPerson;
+
+    if (name === '' && age === '') {
       this.setState({ errors: { name: 'Name required.', age: 'Age required.' } });
       return false;
     }
-    else if (this.state.newPerson.name === '') {
+    else if (name === '') {
       this.setState({ errors: { name: 'Name required.' } });
       return false;
     }
-    else if (this.state.newPerson.age === '') {
-      this.setState({errors: { age: 'Age required.' } });
+    else if (age === '') {
+      this.setState({ errors: { age: 'Age required.' } });
       return false;
     }
 
@@ -124,11 +127,6 @@ class NewPersonForm extends Component {
     if (this.isValid()) {
       this.setState({ persons: this.state.persons.concat(this.state.newPerson) });
     }
-  }
-
-  handleFormSubmition = (e) => {
-    e.preventDefault();
-    this.addPerson();
   }
 
   renderPerson(person, id) {
