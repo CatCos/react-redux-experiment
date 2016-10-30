@@ -133,9 +133,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
-        {this.renderNewPersonForm()}
-        {this.renderPersonsList()}
+      <div className="container main-container">
+        <div className="row">
+          <div className="col col-xs-6 col-md-6">
+            {this.renderNewPersonForm()}
+          </div>
+          <div className="col col-xs-6 col-md-6">
+            {this.renderPersonsList()}
+          </div>
+        </div>
       </div>
     );
   }
