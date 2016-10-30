@@ -68,6 +68,14 @@ class NewPersonForm extends Component {
     this.addPerson();
   }
 
+  renderError(message) {
+    if (message) {
+      return <Error message={message} />;
+    }
+
+    return null;
+  }
+
   renderNewPersonForm() {
     return (
       <form>
@@ -79,7 +87,7 @@ class NewPersonForm extends Component {
             value={this.state.newPerson.name}
             onChange={this.handleNameChange}
           />
-          <Error message={this.state.errors.name} />
+          { this.renderError(this.state.errors.name) }
         </div>
         <div className="form-group">
           <label>Age</label>
@@ -89,7 +97,7 @@ class NewPersonForm extends Component {
             value={this.state.newPerson.age}
             onChange={this.handleAgeChange}
           />
-          <Error message={this.state.errors.age} />
+          { this.renderError(this.state.errors.age) }
         </div>
         <button className="btn btn-default" onClick={this.handleFormSubmition}>Add person</button>
       </form>
