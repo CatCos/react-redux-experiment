@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 
+import Error from './Error';
+
 const personsList = [
   {
     name: 'Catarina Costa',
@@ -77,7 +79,7 @@ class NewPersonForm extends Component {
             value={this.state.newPerson.name}
             onChange={this.handleNameChange}
           />
-         <span className="help-block">{this.state.errors.name}</span>
+          <Error message={this.state.errors.name} />
         </div>
         <div className="form-group">
           <label>Age</label>
@@ -87,7 +89,7 @@ class NewPersonForm extends Component {
             value={this.state.newPerson.age}
             onChange={this.handleAgeChange}
           />
-         <span className="help-block">{this.state.errors.age}</span>
+          <Error message={this.state.errors.age} />
         </div>
         <button className="btn btn-default" onClick={this.handleFormSubmition}>Add person</button>
       </form>
