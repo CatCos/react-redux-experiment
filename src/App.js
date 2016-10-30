@@ -23,11 +23,27 @@ const personsList = [
 
 class App extends Component {
   state = {
-    persons: personsList,
+    persons: [],
     newPerson: {
       name: '',
       age: ''
     }
+  }
+
+  componentWillMount() {
+    this.fetchPersonsList()
+      .then(persons => this.setState({ persons }));
+  }
+
+  /**
+   * Simulate request to server.
+   */
+  fetchPersonsList = () => {
+    return new Promise((resolve, reject) => {
+      window.setTimeout(() => {
+        resolve(personsList);
+      }, Math.random() * 2000 + 1000);
+    });
   }
 
   handleNameChange = (e) => {
@@ -95,13 +111,23 @@ class App extends Component {
     );
   }
 
+  renderPersonsList() {
+    if (this.state.persons.length === 0) {
+      return <div><strong>Fetching persons...</strong></div>;
+    }
+
+    return (
+      <ul>
+        {this.state.persons.map((person, index) => this.renderPerson(person, index))}
+      </ul>
+    );
+  }
+
   render() {
     return (
       <div className="container">
         {this.renderNewPersonForm()}
-        <ul>
-          {this.state.persons.map((person, index) => this.renderPerson(person, index))}
-        </ul>
+        {this.renderPersonsList()}
       </div>
     );
   }
