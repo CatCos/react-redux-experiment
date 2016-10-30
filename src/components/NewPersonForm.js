@@ -3,24 +3,7 @@ import classnames from 'classnames';
 
 import Error from './Error';
 
-const personsList = [
-  {
-    name: 'Catarina Costa',
-    age: 23
-  },
-  {
-    name: 'Rui Pereira',
-    age: 24
-  },
-  {
-    name: 'Maria Antonia',
-    age: 54
-  },
-  {
-    name: 'Manel das Dores',
-    age: 78
-  },
-];
+import { Persons } from '../api';
 
 class NewPersonForm extends Component {
   state = {
@@ -36,19 +19,9 @@ class NewPersonForm extends Component {
   }
 
   componentWillMount() {
-    this.fetchPersonsList()
+    Persons
+      .getAll()
       .then(persons => this.setState({ persons }));
-  }
-
-  /**
-   * Simulate request to server.
-   */
-  fetchPersonsList = () => {
-    return new Promise((resolve, reject) => {
-      window.setTimeout(() => {
-        resolve(personsList);
-      }, Math.random() * 2000 + 1000);
-    });
   }
 
   handleNameChange = (e) => {
