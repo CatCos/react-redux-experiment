@@ -24,17 +24,68 @@ const personsList = [
 class App extends Component {
   state = {
     persons: personsList,
+    newPerson: {
+      name: '',
+      age: ''
+    }
   }
 
+  handleNameChange = (e) => {
+    const name = e.target.value;
+    const newPerson = Object.assign({}, this.state.newPerson, { name });
+    this.setState({ newPerson });
+  }
+
+  handleAgeChange = (e) => {
+    const age = e.target.value;
+    const newPerson = Object.assign({}, this.state.newPerson, { age });
+    this.setState({ newPerson });
+  }
+
+  renderNewPersonForm() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <form>
+        <div className="form-group">
+          <label>Name</label>
+          <input
+            type="text"
+            className="form-control"
+            value={this.state.newPerson.name}
+            onChange={this.handleNameChange}
+          />
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="form-group">
+          <label>Age</label>
+          <input
+            type="number"
+            className="form-control"
+            value={this.state.newPerson.age}
+            onChange={this.handleAgeChange}
+          />
+        </div>
+        <button className="btn btn-default" onClick={this.handleFormSubmition}>Add person</button>
+      </form>
+    );
+  }
+
+  generateRandId() {
+    return Math.floor((Math.random() * 100000) + 1);
+  }
+
+  resetNewPersonForm() {
+    this.setState({ newPerson: { name: '', age: '' } });
+  }
+
+  addPerson() {
+    this.setState({ persons: this.state.persons.concat(this.state.newPerson) });
+  }
+
+  handleFormSubmition = (e) => {
+    e.preventDefault();
+    this.addPerson();
+    this.resetNewPersonForm();
+  }
+
   renderPerson(person, id) {
     return (
       <li key={id} className="list-item">
@@ -46,6 +97,8 @@ class App extends Component {
 
   render() {
     return (
+      <div className="container">
+        {this.renderNewPersonForm()}
         <ul>
           {this.state.persons.map((person, index) => this.renderPerson(person, index))}
         </ul>
